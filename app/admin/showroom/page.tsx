@@ -353,15 +353,15 @@ export default function AdminShowroomPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    <div className="min-h-screen bg-gray-100 py-4 md:py-8">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">
+        <div className="flex justify-between items-center mb-4 md:mb-8">
+          <h1 className="text-2xl md:text-4xl font-bold text-gray-900">
             Gestion du Showroom
           </h1>
           <button
             onClick={handleLogout}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg transition-colors"
+            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 md:px-6 md:py-2 rounded-lg transition-colors text-sm md:text-base"
           >
             Déconnexion
           </button>
@@ -371,19 +371,19 @@ export default function AdminShowroomPage() {
         {!showForm ? (
           <button
             onClick={() => setShowForm(true)}
-            className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold mb-8 transition-colors"
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 md:px-6 md:py-3 rounded-lg font-semibold mb-4 md:mb-8 transition-colors text-sm md:text-base"
           >
             + Ajouter un véhicule
           </button>
         ) : (
-          <div className="bg-white p-8 rounded-lg shadow-lg mb-8">
-            <h2 className="text-2xl font-bold mb-6">
+          <div className="bg-white p-4 md:p-8 rounded-lg shadow-lg mb-4 md:mb-8">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
               {editingVehicle ? 'Modifier le véhicule' : 'Ajouter un véhicule'}
             </h2>
             <form onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                     Marque *
                   </label>
                   <input
@@ -392,12 +392,12 @@ export default function AdminShowroomPage() {
                     onChange={(e) => setFormData({ ...formData, marque: e.target.value })}
                     required
                     placeholder="ex: Renault"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                     Modèle *
                   </label>
                   <input
@@ -406,12 +406,12 @@ export default function AdminShowroomPage() {
                     onChange={(e) => setFormData({ ...formData, modele: e.target.value })}
                     required
                     placeholder="ex: Clio V"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                     Année *
                   </label>
                   <input
@@ -421,12 +421,12 @@ export default function AdminShowroomPage() {
                     required
                     min="1950"
                     max={new Date().getFullYear() + 1}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                     Kilométrage *
                   </label>
                   <input
@@ -436,18 +436,18 @@ export default function AdminShowroomPage() {
                     required
                     min="0"
                     placeholder="ex: 50000"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                     Carburant *
                   </label>
                   <select
                     value={formData.carburant}
                     onChange={(e) => setFormData({ ...formData, carburant: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                   >
                     <option value="essence">Essence</option>
                     <option value="diesel">Diesel</option>
@@ -458,13 +458,13 @@ export default function AdminShowroomPage() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                     Boîte de vitesses *
                   </label>
                   <select
                     value={formData.boite}
                     onChange={(e) => setFormData({ ...formData, boite: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                   >
                     <option value="manuelle">Manuelle</option>
                     <option value="automatique">Automatique</option>
@@ -472,7 +472,7 @@ export default function AdminShowroomPage() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                     Prix (€) *
                   </label>
                   <input
@@ -483,18 +483,18 @@ export default function AdminShowroomPage() {
                     required
                     min="0"
                     placeholder="ex: 15000"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                     Statut *
                   </label>
                   <select
                     value={formData.statut}
                     onChange={(e) => setFormData({ ...formData, statut: e.target.value as 'disponible' | 'reserve' | 'vendu' })}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                   >
                     <option value="disponible">Disponible</option>
                     <option value="reserve">Réservé</option>
@@ -503,8 +503,8 @@ export default function AdminShowroomPage() {
                 </div>
               </div>
 
-              <div className="mb-6">
-                <label className="block text-gray-700 font-semibold mb-2">
+              <div className="mb-4 md:mb-6">
+                <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                   Description
                 </label>
                 <textarea
@@ -512,13 +512,13 @@ export default function AdminShowroomPage() {
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   rows={4}
                   placeholder="Décrivez le véhicule..."
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                  className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                 />
               </div>
 
               {/* Options */}
-              <div className="mb-6">
-                <label className="block text-gray-700 font-semibold mb-2">
+              <div className="mb-4 md:mb-6">
+                <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                   Options et équipements
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -527,7 +527,7 @@ export default function AdminShowroomPage() {
                     value={newOption}
                     onChange={(e) => setNewOption(e.target.value)}
                     placeholder="ex: Climatisation automatique"
-                    className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="flex-1 px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                     onKeyPress={(e) => {
                       if (e.key === 'Enter') {
                         e.preventDefault();
@@ -538,7 +538,7 @@ export default function AdminShowroomPage() {
                   <button
                     type="button"
                     onClick={addOption}
-                    className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg transition-colors"
+                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 md:px-6 md:py-2 rounded-lg transition-colors text-sm md:text-base"
                   >
                     Ajouter
                   </button>
@@ -546,12 +546,12 @@ export default function AdminShowroomPage() {
                 {formData.options.length > 0 && (
                   <div className="space-y-2">
                     {formData.options.map((option, index) => (
-                      <div key={index} className="flex items-center justify-between bg-gray-50 px-4 py-2 rounded">
+                      <div key={index} className="flex items-center justify-between bg-gray-50 px-3 py-2 md:px-4 md:py-2 rounded text-sm md:text-base">
                         <span>{option}</span>
                         <button
                           type="button"
                           onClick={() => removeOption(index)}
-                          className="text-red-600 hover:text-red-700"
+                          className="text-red-600 hover:text-red-700 text-sm"
                         >
                           Supprimer
                         </button>
@@ -562,8 +562,8 @@ export default function AdminShowroomPage() {
               </div>
 
               {/* Images */}
-              <div className="mb-6">
-                <label className="block text-gray-700 font-semibold mb-2">
+              <div className="mb-4 md:mb-6">
+                <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                   Photos
                 </label>
                 <input
@@ -571,18 +571,18 @@ export default function AdminShowroomPage() {
                   accept="image/*"
                   onChange={handleImageUpload}
                   disabled={uploading}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                  className="w-full px-3 py-2 md:px-4 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 text-sm md:text-base"
                 />
-                {uploading && <p className="text-sm text-gray-500 mt-1">Téléchargement...</p>}
+                {uploading && <p className="text-xs md:text-sm text-gray-500 mt-1">Téléchargement...</p>}
               </div>
 
               {/* Image Preview with ordering */}
               {formData.photos.length > 0 && (
-                <div className="mb-6">
-                  <label className="block text-gray-700 font-semibold mb-2">
+                <div className="mb-4 md:mb-6">
+                  <label className="block text-gray-700 font-semibold mb-1 md:mb-2 text-sm md:text-base">
                     Photos téléchargées (première = photo principale)
                   </label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
                     {formData.photos.map((url, index) => (
                       <div key={index} className="relative group">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -630,7 +630,7 @@ export default function AdminShowroomPage() {
               )}
 
               {/* Active checkbox */}
-              <div className="mb-6">
+              <div className="mb-4 md:mb-6">
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -638,14 +638,14 @@ export default function AdminShowroomPage() {
                     onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
                     className="mr-2"
                   />
-                  <span className="text-gray-700 font-semibold">Annonce active (visible sur le site)</span>
+                  <span className="text-gray-700 font-semibold text-sm md:text-base">Annonce active (visible sur le site)</span>
                 </label>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                 <button
                   type="submit"
-                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 md:px-8 md:py-3 rounded-lg font-semibold transition-colors text-sm md:text-base"
                 >
                   {editingVehicle ? 'Mettre à jour' : 'Ajouter'}
                 </button>
@@ -653,7 +653,7 @@ export default function AdminShowroomPage() {
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, statut: 'vendu' })}
-                    className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+                    className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 md:px-8 md:py-3 rounded-lg font-semibold transition-colors text-sm md:text-base"
                   >
                     Marquer comme vendu
                   </button>
@@ -661,7 +661,7 @@ export default function AdminShowroomPage() {
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+                  className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 md:px-8 md:py-3 rounded-lg font-semibold transition-colors text-sm md:text-base"
                 >
                   Annuler
                 </button>
@@ -672,7 +672,8 @@ export default function AdminShowroomPage() {
 
         {/* Vehicles List */}
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="overflow-x-auto">
+          {/* Desktop Table View */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-900 text-white">
                 <tr>
@@ -769,6 +770,96 @@ export default function AdminShowroomPage() {
               </tbody>
             </table>
           </div>
+
+          {/* Mobile Card View */}
+          <div className="block md:hidden">
+            {vehicles.length > 0 ? (
+              <div className="space-y-3 p-3">
+                {vehicles.map((vehicle) => (
+                  <div key={vehicle.id} className="bg-white rounded-xl p-3 shadow border border-gray-200">
+                    <div className="flex gap-3 mb-3">
+                      {vehicle.photos[0] && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={vehicle.photos[0]}
+                          alt={`Photo principale de ${vehicle.marque} ${vehicle.modele}`}
+                          className="w-20 h-16 object-cover rounded flex-shrink-0"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-sm leading-tight mb-1">
+                          {vehicle.marque} {vehicle.modele}
+                        </div>
+                        <div className="text-xs text-gray-500 mb-1">
+                          {vehicle.annee} • {vehicle.kilometrage.toLocaleString()} km
+                        </div>
+                        <div className="text-sm font-bold text-red-600">
+                          {vehicle.prix.toLocaleString()} €
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2 mb-3 text-xs">
+                      <span
+                        className={`px-2 py-1 rounded-full ${
+                          vehicle.statut === 'disponible'
+                            ? 'bg-green-100 text-green-800'
+                            : vehicle.statut === 'reserve'
+                            ? 'bg-orange-100 text-orange-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}
+                      >
+                        {vehicle.statut === 'disponible' ? 'Disponible' : vehicle.statut === 'reserve' ? 'Réservé' : 'Vendu'}
+                      </span>
+                      <span
+                        className={`px-2 py-1 rounded-full ${
+                          vehicle.isActive ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
+                        }`}
+                      >
+                        {vehicle.isActive ? 'Actif' : 'Inactif'}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      <button
+                        onClick={() => handleEdit(vehicle)}
+                        className="text-blue-600 hover:text-blue-700 font-medium"
+                      >
+                        Modifier
+                      </button>
+                      <button
+                        onClick={() => handleDuplicate(vehicle)}
+                        className="text-purple-600 hover:text-purple-700 font-medium"
+                      >
+                        Dupliquer
+                      </button>
+                      {vehicle.statut !== 'vendu' && (
+                        <button
+                          onClick={() => handleMarkAsSold(vehicle.id)}
+                          className="text-orange-600 hover:text-orange-700 font-medium"
+                        >
+                          Vendu
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleToggleActive(vehicle)}
+                        className="text-gray-600 hover:text-gray-700 font-medium"
+                      >
+                        {vehicle.isActive ? 'Désactiver' : 'Activer'}
+                      </button>
+                      <button
+                        onClick={() => handleDelete(vehicle.id)}
+                        className="text-red-600 hover:text-red-700 font-medium"
+                      >
+                        Supprimer
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
           {vehicles.length === 0 && (
             <div className="text-center py-12 text-gray-500">
               Aucun véhicule dans la base de données
