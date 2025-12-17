@@ -1,23 +1,35 @@
-import { NextRequest, NextResponse } from "next/server";
+export const runtime = "nodejs";
 
-export async function POST(request: NextRequest) {
+import { NextResponse } from "next/server";
+
+export async function POST(req: Request) {
   try {
-    const { email, password } = await request.json();
+    const { email, password } = await req.json();
 
     if (!email || !password) {
-      return NextResponse.json({ error: "Missing" }, { status: 400 });
+      return NextResponse.json({ error: "Missing credentials" }, { status: 400 });
     }
 
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+
+    // 🔒 logs temporaires (à enlever après)
+    console.log("AUTH CHECK");
+    console.log("email recv :", email);
+    console.log("email env  :", adminEmail);
+    console.log("pass recv  :", password);
+    console.log("pass env   :", adminPassword);
+
     if (
-      email !== process.env.ADMIN_EMAIL ||
-      password !== process.env.ADMIN_PASSWORD
+      email.trim() !== adminEmail ||
+      password.trim() !== adminPassword
     ) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     return NextResponse.json({ success: true });
-  } catch (e) {
-    console.error("AUTH ERROR:", e);
-    return NextResponse.json({ error: "Crash" }, { status: 500 });
+  } catch (err) {
+    console.error("AUTH ERROR:", err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
