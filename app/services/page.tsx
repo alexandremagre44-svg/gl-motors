@@ -1,7 +1,8 @@
 import ServiceCard from "@/components/ServiceCard";
+import { siteConfig } from "@/lib/site.config";
 
 export const metadata = {
-  title: "Nos Services - GL MOTORS",
+  title: `Nos Services - ${siteConfig.name}`,
   description: "Découvrez tous nos services automobiles : entretien, réparation, diagnostic et plus encore.",
 };
 
@@ -104,10 +105,10 @@ export default function ServicesPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+33123456789"
+              href={`tel:${siteConfig.contact.phone}`}
               className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-4 rounded-lg transition-colors"
             >
-              📞 +33 1 23 45 67 89
+              📞 {siteConfig.contact.phoneFormatted}
             </a>
             <a
               href="/contact"
