@@ -1,4 +1,4 @@
-import { vehicleStore } from "@/lib/vehicles.store";
+import { vehicleService } from "@/lib/vehicles.service";
 import VehicleCard from "@/components/VehicleCard";
 import { siteConfig } from "@/lib/site.config";
 
@@ -10,8 +10,8 @@ export const metadata = {
 // Disable caching for this page to always show latest vehicles
 export const dynamic = 'force-dynamic';
 
-export default function ShowroomPage() {
-  const vehicles = vehicleStore.getAll();
+export default async function ShowroomPage() {
+  const vehicles = await vehicleService.getAll();
   // Filter only active vehicles for public display
   const activeVehicles = vehicles.filter(v => v.isActive);
   const availableVehicles = activeVehicles.filter(v => v.statut === 'disponible');
