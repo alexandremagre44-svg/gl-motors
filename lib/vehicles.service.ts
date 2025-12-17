@@ -86,22 +86,32 @@ export const vehicleService = {
 
   /**
    * Create new vehicle in Firestore
+   * Uses a counter document for efficient ID generation
    */
   async create(input: CreateVehicleInput): Promise<Vehicle> {
     try {
       const db = getFirestoreDb();
       const now = new Date().toISOString();
 
-      // Get next ID by finding the max ID and incrementing
-      const snapshot = await db.collection(COLLECTION_NAME).get();
-      let maxId = 0;
-      snapshot.forEach(doc => {
-        const docId = parseInt(doc.id);
-        if (!isNaN(docId) && docId > maxId) {
-          maxId = docId;
+      // Use a counter document to generate sequential IDs efficiently
+      const counterRef = db.collection('counters').doc('vehicles');
+      
+      let newId: number;
+      
+      // Run in a transaction to ensure atomicity
+      await db.runTransaction(async (transaction) => {
+        const counterDoc = await transaction.get(counterRef);
+        
+        if (!counterDoc.exists) {
+          // Initialize counter if it doesn't exist
+          newId = 1;
+          transaction.set(counterRef, { value: newId });
+        } else {
+          // Increment counter
+          newId = (counterDoc.data()?.value || 0) + 1;
+          transaction.update(counterRef, { value: newId });
         }
       });
-      const newId = maxId + 1;
 
       const vehicleData = {
         marque: input.marque,
@@ -120,10 +130,10 @@ export const vehicleService = {
         updatedAt: now,
       };
 
-      await db.collection(COLLECTION_NAME).doc(newId.toString()).set(vehicleData);
+      await db.collection(COLLECTION_NAME).doc(newId!.toString()).set(vehicleData);
 
       return {
-        id: newId,
+        id: newId!,
         ...vehicleData,
       };
     } catch (error) {
