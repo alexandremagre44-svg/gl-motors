@@ -11,8 +11,11 @@ export const dynamic = 'force-dynamic';
 
 export default function ShowroomPage() {
   const vehicles = vehicleDb.getAll();
-  const availableVehicles = vehicles.filter(v => v.status === 'available');
-  const soldVehicles = vehicles.filter(v => v.status === 'sold');
+  // Filter only active vehicles for public display
+  const activeVehicles = vehicles.filter(v => v.isActive);
+  const availableVehicles = activeVehicles.filter(v => v.statut === 'disponible');
+  const reservedVehicles = activeVehicles.filter(v => v.statut === 'reserve');
+  const soldVehicles = activeVehicles.filter(v => v.statut === 'vendu');
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -46,6 +49,20 @@ export default function ShowroomPage() {
             {availableVehicles.map((vehicle) => (
               <VehicleCard key={vehicle.id} vehicle={vehicle} />
             ))}
+          </div>
+        )}
+
+        {/* Reserved Vehicles */}
+        {reservedVehicles.length > 0 && (
+          <div className="mt-20">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              Véhicules Réservés ({reservedVehicles.length})
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-75">
+              {reservedVehicles.map((vehicle) => (
+                <VehicleCard key={vehicle.id} vehicle={vehicle} />
+              ))}
+            </div>
           </div>
         )}
 

@@ -3,6 +3,21 @@
 import { useState, useEffect } from 'react';
 import { Vehicle } from '@/lib/db/schema';
 
+const defaultFormData = {
+  marque: '',
+  modele: '',
+  annee: '',
+  kilometrage: '',
+  carburant: 'essence',
+  boite: 'manuelle',
+  prix: '',
+  description: '',
+  options: [] as string[],
+  photos: [] as string[],
+  statut: 'disponible' as 'disponible' | 'reserve' | 'vendu',
+  isActive: true,
+};
+
 export default function AdminShowroomPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [email, setEmail] = useState('');
@@ -10,18 +25,11 @@ export default function AdminShowroomPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    year: '',
-    mileage: '',
-    price: '',
-    status: 'available' as 'available' | 'sold',
-    images: [] as string[],
-  });
+  const [formData, setFormData] = useState(defaultFormData);
   const [uploading, setUploading] = useState(false);
+  const [newOption, setNewOption] = useState('');
 
   useEffect(() => {
-    // Check if already authenticated
     checkAuth();
   }, []);
 
@@ -32,11 +40,8 @@ export default function AdminShowroomPage() {
   }, [isAuthenticated]);
 
   const checkAuth = async () => {
-    // Check if admin-token cookie exists
-    // Token validation happens server-side on API calls
     const hasToken = document.cookie.includes('admin-token=');
     if (hasToken) {
-      // Verify by attempting to fetch vehicles
       try {
         const response = await fetch('/api/vehicles');
         if (response.ok) {
@@ -94,19 +99,19 @@ export default function AdminShowroomPage() {
 
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', file);
 
       const response = await fetch('/api/upload', {
         method: 'POST',
-        body: formData,
+        body: uploadFormData,
       });
 
       if (response.ok) {
         const data = await response.json();
         setFormData(prev => ({
           ...prev,
-          images: [...prev.images, data.url],
+          photos: [...prev.photos, data.url],
         }));
       } else {
         alert('Erreur lors du téléchargement de l\'image');
@@ -122,7 +127,34 @@ export default function AdminShowroomPage() {
   const removeImage = (index: number) => {
     setFormData(prev => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index),
+      photos: prev.photos.filter((_, i) => i !== index),
+    }));
+  };
+
+  const moveImage = (index: number, direction: 'up' | 'down') => {
+    const newPhotos = [...formData.photos];
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    if (newIndex >= 0 && newIndex < newPhotos.length) {
+      [newPhotos[index], newPhotos[newIndex]] = [newPhotos[newIndex], newPhotos[index]];
+      setFormData(prev => ({ ...prev, photos: newPhotos }));
+    }
+  };
+
+  const addOption = () => {
+    if (newOption.trim()) {
+      setFormData(prev => ({
+        ...prev,
+        options: [...prev.options, newOption.trim()],
+      }));
+      setNewOption('');
+    }
+  };
+
+  const removeOption = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      options: prev.options.filter((_, i) => i !== index),
     }));
   };
 
@@ -130,17 +162,22 @@ export default function AdminShowroomPage() {
     e.preventDefault();
 
     const vehicleData = {
-      name: formData.name,
-      year: parseInt(formData.year),
-      mileage: parseInt(formData.mileage),
-      price: parseFloat(formData.price),
-      status: formData.status,
-      images: formData.images,
+      marque: formData.marque,
+      modele: formData.modele,
+      annee: parseInt(formData.annee),
+      kilometrage: parseInt(formData.kilometrage),
+      carburant: formData.carburant,
+      boite: formData.boite,
+      prix: parseFloat(formData.prix),
+      description: formData.description,
+      options: formData.options,
+      photos: formData.photos,
+      statut: formData.statut,
+      isActive: formData.isActive,
     };
 
     try {
       if (editingVehicle) {
-        // Update
         const response = await fetch(`/api/vehicles/${editingVehicle.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -153,7 +190,6 @@ export default function AdminShowroomPage() {
           fetchVehicles();
         }
       } else {
-        // Create
         const response = await fetch('/api/vehicles', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -175,14 +211,75 @@ export default function AdminShowroomPage() {
   const handleEdit = (vehicle: Vehicle) => {
     setEditingVehicle(vehicle);
     setFormData({
-      name: vehicle.name,
-      year: vehicle.year.toString(),
-      mileage: vehicle.mileage.toString(),
-      price: vehicle.price.toString(),
-      status: vehicle.status,
-      images: vehicle.images,
+      marque: vehicle.marque,
+      modele: vehicle.modele,
+      annee: vehicle.annee.toString(),
+      kilometrage: vehicle.kilometrage.toString(),
+      carburant: vehicle.carburant,
+      boite: vehicle.boite,
+      prix: vehicle.prix.toString(),
+      description: vehicle.description,
+      options: vehicle.options,
+      photos: vehicle.photos,
+      statut: vehicle.statut,
+      isActive: vehicle.isActive,
     });
     setShowForm(true);
+  };
+
+  const handleDuplicate = (vehicle: Vehicle) => {
+    setEditingVehicle(null);
+    setFormData({
+      marque: vehicle.marque,
+      modele: vehicle.modele,
+      annee: vehicle.annee.toString(),
+      kilometrage: vehicle.kilometrage.toString(),
+      carburant: vehicle.carburant,
+      boite: vehicle.boite,
+      prix: vehicle.prix.toString(),
+      description: vehicle.description,
+      options: vehicle.options,
+      photos: vehicle.photos,
+      statut: 'disponible',
+      isActive: true,
+    });
+    setShowForm(true);
+  };
+
+  const handleMarkAsSold = async (id: number) => {
+    try {
+      const response = await fetch(`/api/vehicles/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ statut: 'vendu' }),
+      });
+
+      if (response.ok) {
+        alert('Véhicule marqué comme vendu');
+        fetchVehicles();
+      }
+    } catch (error) {
+      console.error('Error marking as sold:', error);
+      alert('Erreur lors de la mise à jour');
+    }
+  };
+
+  const handleToggleActive = async (vehicle: Vehicle) => {
+    try {
+      const response = await fetch(`/api/vehicles/${vehicle.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isActive: !vehicle.isActive }),
+      });
+
+      if (response.ok) {
+        alert(vehicle.isActive ? 'Annonce désactivée' : 'Annonce activée');
+        fetchVehicles();
+      }
+    } catch (error) {
+      console.error('Error toggling active:', error);
+      alert('Erreur lors de la mise à jour');
+    }
   };
 
   const handleDelete = async (id: number) => {
@@ -206,14 +303,7 @@ export default function AdminShowroomPage() {
   };
 
   const resetForm = () => {
-    setFormData({
-      name: '',
-      year: '',
-      mileage: '',
-      price: '',
-      status: 'available',
-      images: [],
-    });
+    setFormData(defaultFormData);
     setEditingVehicle(null);
     setShowForm(false);
   };
@@ -291,16 +381,31 @@ export default function AdminShowroomPage() {
               {editingVehicle ? 'Modifier le véhicule' : 'Ajouter un véhicule'}
             </h2>
             <form onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label className="block text-gray-700 font-semibold mb-2">
-                    Nom du véhicule *
+                    Marque *
                   </label>
                   <input
                     type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    value={formData.marque}
+                    onChange={(e) => setFormData({ ...formData, marque: e.target.value })}
                     required
+                    placeholder="ex: Renault"
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    Modèle *
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.modele}
+                    onChange={(e) => setFormData({ ...formData, modele: e.target.value })}
+                    required
+                    placeholder="ex: Clio V"
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
                   />
                 </div>
@@ -311,9 +416,11 @@ export default function AdminShowroomPage() {
                   </label>
                   <input
                     type="number"
-                    value={formData.year}
-                    onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                    value={formData.annee}
+                    onChange={(e) => setFormData({ ...formData, annee: e.target.value })}
                     required
+                    min="1950"
+                    max={new Date().getFullYear() + 1}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
                   />
                 </div>
@@ -324,11 +431,44 @@ export default function AdminShowroomPage() {
                   </label>
                   <input
                     type="number"
-                    value={formData.mileage}
-                    onChange={(e) => setFormData({ ...formData, mileage: e.target.value })}
+                    value={formData.kilometrage}
+                    onChange={(e) => setFormData({ ...formData, kilometrage: e.target.value })}
                     required
+                    min="0"
+                    placeholder="ex: 50000"
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
                   />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    Carburant *
+                  </label>
+                  <select
+                    value={formData.carburant}
+                    onChange={(e) => setFormData({ ...formData, carburant: e.target.value })}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                  >
+                    <option value="essence">Essence</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="electrique">Électrique</option>
+                    <option value="hybride">Hybride</option>
+                    <option value="gpl">GPL</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    Boîte de vitesses *
+                  </label>
+                  <select
+                    value={formData.boite}
+                    onChange={(e) => setFormData({ ...formData, boite: e.target.value })}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                  >
+                    <option value="manuelle">Manuelle</option>
+                    <option value="automatique">Automatique</option>
+                  </select>
                 </div>
 
                 <div>
@@ -338,9 +478,11 @@ export default function AdminShowroomPage() {
                   <input
                     type="number"
                     step="0.01"
-                    value={formData.price}
-                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                    value={formData.prix}
+                    onChange={(e) => setFormData({ ...formData, prix: e.target.value })}
                     required
+                    min="0"
+                    placeholder="ex: 15000"
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
                   />
                 </div>
@@ -350,64 +492,172 @@ export default function AdminShowroomPage() {
                     Statut *
                   </label>
                   <select
-                    value={formData.status}
-                    onChange={(e) => setFormData({ ...formData, status: e.target.value as 'available' | 'sold' })}
+                    value={formData.statut}
+                    onChange={(e) => setFormData({ ...formData, statut: e.target.value as 'disponible' | 'reserve' | 'vendu' })}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
                   >
-                    <option value="available">Disponible</option>
-                    <option value="sold">Vendu</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="reserve">Réservé</option>
+                    <option value="vendu">Vendu</option>
                   </select>
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Images
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    disabled={uploading}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
-                  />
-                  {uploading && <p className="text-sm text-gray-500 mt-1">Téléchargement...</p>}
                 </div>
               </div>
 
-              {/* Image Preview */}
-              {formData.images.length > 0 && (
-                <div className="mt-6">
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Images téléchargées
-                  </label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {formData.images.map((url, index) => (
-                      <div key={index} className="relative">
-                        <img
-                          src={url}
-                          alt={`Preview ${index + 1}`}
-                          className="w-full h-32 object-cover rounded-lg"
-                        />
+              <div className="mb-6">
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Description
+                </label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  rows={4}
+                  placeholder="Décrivez le véhicule..."
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                />
+              </div>
+
+              {/* Options */}
+              <div className="mb-6">
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Options et équipements
+                </label>
+                <div className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={newOption}
+                    onChange={(e) => setNewOption(e.target.value)}
+                    placeholder="ex: Climatisation automatique"
+                    className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addOption();
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={addOption}
+                    className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg transition-colors"
+                  >
+                    Ajouter
+                  </button>
+                </div>
+                {formData.options.length > 0 && (
+                  <div className="space-y-2">
+                    {formData.options.map((option, index) => (
+                      <div key={index} className="flex items-center justify-between bg-gray-50 px-4 py-2 rounded">
+                        <span>{option}</span>
                         <button
                           type="button"
-                          onClick={() => removeImage(index)}
-                          className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700"
+                          onClick={() => removeOption(index)}
+                          className="text-red-600 hover:text-red-700"
                         >
-                          ×
+                          Supprimer
                         </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Images */}
+              <div className="mb-6">
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Photos
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  disabled={uploading}
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                />
+                {uploading && <p className="text-sm text-gray-500 mt-1">Téléchargement...</p>}
+              </div>
+
+              {/* Image Preview with ordering */}
+              {formData.photos.length > 0 && (
+                <div className="mb-6">
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    Photos téléchargées (première = photo principale)
+                  </label>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {formData.photos.map((url, index) => (
+                      <div key={index} className="relative group">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={url}
+                          alt={`Photo ${index + 1} de ${formData.marque || 'véhicule'} ${formData.modele || ''}`}
+                          className="w-full h-32 object-cover rounded-lg"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center gap-2">
+                          {index > 0 && (
+                            <button
+                              type="button"
+                              onClick={() => moveImage(index, 'up')}
+                              className="bg-white text-gray-900 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-200"
+                            >
+                              ←
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => removeImage(index)}
+                            className="bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-700"
+                          >
+                            ×
+                          </button>
+                          {index < formData.photos.length - 1 && (
+                            <button
+                              type="button"
+                              onClick={() => moveImage(index, 'down')}
+                              className="bg-white text-gray-900 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-200"
+                            >
+                              →
+                            </button>
+                          )}
+                        </div>
+                        {index === 0 && (
+                          <div className="absolute top-2 left-2 bg-green-600 text-white text-xs px-2 py-1 rounded">
+                            Principale
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              <div className="flex gap-4 mt-6">
+              {/* Active checkbox */}
+              <div className="mb-6">
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={formData.isActive}
+                    onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                    className="mr-2"
+                  />
+                  <span className="text-gray-700 font-semibold">Annonce active (visible sur le site)</span>
+                </label>
+              </div>
+
+              <div className="flex gap-4">
                 <button
                   type="submit"
                   className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
                 >
                   {editingVehicle ? 'Mettre à jour' : 'Ajouter'}
                 </button>
+                {editingVehicle && formData.statut !== 'vendu' && (
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, statut: 'vendu' })}
+                    className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+                  >
+                    Marquer comme vendu
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={resetForm}
@@ -422,53 +672,103 @@ export default function AdminShowroomPage() {
 
         {/* Vehicles List */}
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <table className="w-full">
-            <thead className="bg-gray-900 text-white">
-              <tr>
-                <th className="px-6 py-4 text-left">Nom</th>
-                <th className="px-6 py-4 text-left">Année</th>
-                <th className="px-6 py-4 text-left">Km</th>
-                <th className="px-6 py-4 text-left">Prix</th>
-                <th className="px-6 py-4 text-left">Statut</th>
-                <th className="px-6 py-4 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {vehicles.map((vehicle) => (
-                <tr key={vehicle.id} className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4">{vehicle.name}</td>
-                  <td className="px-6 py-4">{vehicle.year}</td>
-                  <td className="px-6 py-4">{vehicle.mileage.toLocaleString()} km</td>
-                  <td className="px-6 py-4">{vehicle.price.toLocaleString()} €</td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-sm ${
-                        vehicle.status === 'available'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
-                      }`}
-                    >
-                      {vehicle.status === 'available' ? 'Disponible' : 'Vendu'}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <button
-                      onClick={() => handleEdit(vehicle)}
-                      className="text-blue-600 hover:text-blue-700 mr-4"
-                    >
-                      Modifier
-                    </button>
-                    <button
-                      onClick={() => handleDelete(vehicle.id)}
-                      className="text-red-600 hover:text-red-700"
-                    >
-                      Supprimer
-                    </button>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-900 text-white">
+                <tr>
+                  <th className="px-6 py-4 text-left">Photo</th>
+                  <th className="px-6 py-4 text-left">Véhicule</th>
+                  <th className="px-6 py-4 text-left">Année</th>
+                  <th className="px-6 py-4 text-left">Km</th>
+                  <th className="px-6 py-4 text-left">Prix</th>
+                  <th className="px-6 py-4 text-left">Statut</th>
+                  <th className="px-6 py-4 text-left">Actif</th>
+                  <th className="px-6 py-4 text-left">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {vehicles.map((vehicle) => (
+                  <tr key={vehicle.id} className="border-b hover:bg-gray-50">
+                    <td className="px-6 py-4">
+                      {vehicle.photos[0] && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={vehicle.photos[0]}
+                          alt={`Photo principale de ${vehicle.marque} ${vehicle.modele}`}
+                          className="w-20 h-14 object-cover rounded"
+                        />
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="font-semibold">{vehicle.marque} {vehicle.modele}</div>
+                      <div className="text-sm text-gray-500">{vehicle.carburant} • {vehicle.boite}</div>
+                    </td>
+                    <td className="px-6 py-4">{vehicle.annee}</td>
+                    <td className="px-6 py-4">{vehicle.kilometrage.toLocaleString()} km</td>
+                    <td className="px-6 py-4 font-semibold">{vehicle.prix.toLocaleString()} €</td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm ${
+                          vehicle.statut === 'disponible'
+                            ? 'bg-green-100 text-green-800'
+                            : vehicle.statut === 'reserve'
+                            ? 'bg-orange-100 text-orange-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}
+                      >
+                        {vehicle.statut === 'disponible' ? 'Disponible' : vehicle.statut === 'reserve' ? 'Réservé' : 'Vendu'}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm ${
+                          vehicle.isActive ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
+                        }`}
+                      >
+                        {vehicle.isActive ? 'Oui' : 'Non'}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => handleEdit(vehicle)}
+                          className="text-blue-600 hover:text-blue-700 text-sm"
+                        >
+                          Modifier
+                        </button>
+                        <button
+                          onClick={() => handleDuplicate(vehicle)}
+                          className="text-purple-600 hover:text-purple-700 text-sm"
+                        >
+                          Dupliquer
+                        </button>
+                        {vehicle.statut !== 'vendu' && (
+                          <button
+                            onClick={() => handleMarkAsSold(vehicle.id)}
+                            className="text-orange-600 hover:text-orange-700 text-sm"
+                          >
+                            Marquer vendu
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleToggleActive(vehicle)}
+                          className="text-gray-600 hover:text-gray-700 text-sm"
+                        >
+                          {vehicle.isActive ? 'Désactiver' : 'Activer'}
+                        </button>
+                        <button
+                          onClick={() => handleDelete(vehicle.id)}
+                          className="text-red-600 hover:text-red-700 text-sm"
+                        >
+                          Supprimer
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           {vehicles.length === 0 && (
             <div className="text-center py-12 text-gray-500">
               Aucun véhicule dans la base de données

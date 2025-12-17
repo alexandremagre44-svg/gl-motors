@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     
     // Basic validation
-    if (!body.name || !body.year || !body.mileage || body.price === undefined) {
+    if (!body.marque || !body.modele || !body.annee || !body.kilometrage || body.prix === undefined || !body.carburant || !body.boite) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -29,12 +29,18 @@ export async function POST(request: NextRequest) {
     }
 
     const vehicle = vehicleDb.create({
-      name: body.name,
-      year: parseInt(body.year),
-      mileage: parseInt(body.mileage),
-      price: parseFloat(body.price),
-      status: body.status || 'available',
-      images: body.images || [],
+      marque: body.marque,
+      modele: body.modele,
+      annee: parseInt(body.annee),
+      kilometrage: parseInt(body.kilometrage),
+      carburant: body.carburant,
+      boite: body.boite,
+      prix: parseFloat(body.prix),
+      description: body.description || '',
+      options: body.options || [],
+      photos: body.photos || [],
+      statut: body.statut || 'disponible',
+      isActive: body.isActive !== false,
     });
 
     return NextResponse.json(vehicle, { status: 201 });

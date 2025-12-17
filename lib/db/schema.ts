@@ -1,23 +1,35 @@
 // Database schema for vehicles
 export interface Vehicle {
   id: number;
-  name: string;
-  year: number;
-  mileage: number;
-  price: number;
-  status: 'available' | 'sold';
-  images: string[]; // Cloudinary URLs
+  marque: string;           // Brand
+  modele: string;           // Model
+  annee: number;            // Year
+  kilometrage: number;      // Mileage
+  carburant: string;        // Fuel type: essence, diesel, electrique, hybride
+  boite: string;            // Transmission: manuelle, automatique
+  prix: number;             // Price
+  description: string;      // Full description
+  options: string[];        // Array of options/features
+  photos: string[];         // Cloudinary URLs with order
+  statut: 'disponible' | 'reserve' | 'vendu';  // Status
+  isActive: boolean;        // Active listing
   createdAt: string;
   updatedAt: string;
 }
 
 export interface CreateVehicleInput {
-  name: string;
-  year: number;
-  mileage: number;
-  price: number;
-  status: 'available' | 'sold';
-  images: string[];
+  marque: string;
+  modele: string;
+  annee: number;
+  kilometrage: number;
+  carburant: string;
+  boite: string;
+  prix: number;
+  description: string;
+  options: string[];
+  photos: string[];
+  statut?: 'disponible' | 'reserve' | 'vendu';
+  isActive?: boolean;
 }
 
 export interface UpdateVehicleInput extends Partial<CreateVehicleInput> {
