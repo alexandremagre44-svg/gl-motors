@@ -26,7 +26,7 @@ export default function Hero({ title, subtitle, showCTA = true }: HeroProps) {
         {/* Logo */}
         <div className="mb-8">
           <h1 className="text-5xl md:text-7xl font-bold mb-2">
-            <span className="text-red-600">GL</span> {siteConfig.name.replace('GL ', '')}
+            <span className="text-red-600">{siteConfig.brand.prefix}</span> {siteConfig.brand.suffix}
           </h1>
         </div>
 

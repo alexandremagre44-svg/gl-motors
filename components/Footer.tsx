@@ -9,7 +9,7 @@ export default function Footer() {
           {/* About */}
           <div>
             <h3 className="text-xl font-bold mb-4">
-              <span className="text-red-600">GL</span> {siteConfig.name.replace('GL ', '')}
+              <span className="text-red-600">{siteConfig.brand.prefix}</span> {siteConfig.brand.suffix}
             </h3>
             <p className="text-gray-400">
               {siteConfig.description}

@@ -13,7 +13,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="text-2xl font-bold">
-            <span className="text-red-600">GL</span> {siteConfig.name.replace('GL ', '')}
+            <span className="text-red-600">{siteConfig.brand.prefix}</span> {siteConfig.brand.suffix}
           </Link>
 
           {/* Desktop Navigation */}

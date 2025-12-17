@@ -1,5 +1,9 @@
 export const siteConfig = {
   name: "GL MOTORS",
+  brand: {
+    prefix: "GL",
+    suffix: "MOTORS",
+  },
   slogan: "Entretien, mécanique et diagnostic toutes marques",
   description: "Votre garage de confiance pour l'entretien et la réparation de tous types de véhicules.",
   title: "Garage automobile à Paris",
