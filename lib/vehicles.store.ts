@@ -1,6 +1,14 @@
 import { Vehicle, CreateVehicleInput, UpdateVehicleInput } from './db/schema';
 
-// In-memory storage for vehicles
+/**
+ * In-memory storage for vehicles
+ * 
+ * IMPORTANT NOTES:
+ * - Data is stored in memory and will be lost on server restart or redeployment
+ * - This is intentional for Vercel compatibility (no file system access)
+ * - In Next.js serverless environment, each instance handles one request at a time
+ * - Data persistence is not a priority (acceptable per requirements)
+ */
 const vehicles: Vehicle[] = [];
 let nextId = 1;
 
