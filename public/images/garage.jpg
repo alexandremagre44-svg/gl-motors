@@ -1,0 +1,12 @@
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="#1a1a1a"/>
+  <text x="960" y="500" font-family="Arial, sans-serif" font-size="60" fill="#ffffff" text-anchor="middle">
+    GL MOTORS
+  </text>
+  <text x="960" y="580" font-family="Arial, sans-serif" font-size="30" fill="#cccccc" text-anchor="middle">
+    Remplacez cette image par une photo de votre garage
+  </text>
+  <text x="960" y="620" font-family="Arial, sans-serif" font-size="20" fill="#999999" text-anchor="middle">
+    /public/images/garage.jpg
+  </text>
+</svg>
