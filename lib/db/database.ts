@@ -10,7 +10,7 @@ let db: Database.Database | null = null;
 function getDb(): Database.Database {
   if (!db) {
     // Create data directory if it doesn't exist
-    const fs = require('fs');
+    const fs = require('fs'); // Keep for compatibility with better-sqlite3
     const dataDir = path.join(process.cwd(), 'data');
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });

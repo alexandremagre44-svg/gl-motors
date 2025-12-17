@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAuth } from '@/lib/auth';
+import { createSessionToken } from '@/lib/session';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,8 +22,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create a simple session token
-    const token = Buffer.from(`${email}:${Date.now()}`).toString('base64');
+    // Create a secure session token
+    const token = createSessionToken(email);
 
     const response = NextResponse.json({ success: true });
     response.cookies.set('admin-token', token, {

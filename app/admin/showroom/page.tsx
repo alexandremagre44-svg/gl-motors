@@ -32,10 +32,19 @@ export default function AdminShowroomPage() {
   }, [isAuthenticated]);
 
   const checkAuth = async () => {
-    // Simple check - in production, verify token
-    const hasToken = document.cookie.includes('admin-token');
+    // Check if admin-token cookie exists
+    // Token validation happens server-side on API calls
+    const hasToken = document.cookie.includes('admin-token=');
     if (hasToken) {
-      setIsAuthenticated(true);
+      // Verify by attempting to fetch vehicles
+      try {
+        const response = await fetch('/api/vehicles');
+        if (response.ok) {
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+      }
     }
   };
 
