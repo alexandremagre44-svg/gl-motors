@@ -1,4 +1,4 @@
-import { vehicleDb } from "@/lib/db/database";
+import { vehicleStore } from "@/lib/vehicles.store";
 import VehicleCard from "@/components/VehicleCard";
 
 export const metadata = {
@@ -10,7 +10,7 @@ export const metadata = {
 export const dynamic = 'force-dynamic';
 
 export default function ShowroomPage() {
-  const vehicles = vehicleDb.getAll();
+  const vehicles = vehicleStore.getAll();
   // Filter only active vehicles for public display
   const activeVehicles = vehicles.filter(v => v.isActive);
   const availableVehicles = activeVehicles.filter(v => v.statut === 'disponible');
