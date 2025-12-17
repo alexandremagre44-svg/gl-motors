@@ -10,7 +10,9 @@ export default function VehicleCard({ vehicle }: VehicleCardProps) {
   const mainImage = vehicle.photos[0] || '/images/placeholder-car.jpg';
   
   // Check if vehicle is new (created within last 30 days)
-  const isNew = new Date(vehicle.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  const isNew = new Date(vehicle.createdAt) > thirtyDaysAgo;
 
   return (
     <Link href={`/showroom/${vehicle.id}`}>

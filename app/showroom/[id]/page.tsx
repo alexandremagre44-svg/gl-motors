@@ -34,7 +34,9 @@ export default async function VehicleDetailPage({ params }: PageProps) {
   }
 
   const mainImage = vehicle.photos[0] || '/images/placeholder-car.jpg';
-  const isNew = new Date(vehicle.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  const isNew = new Date(vehicle.createdAt) > thirtyDaysAgo;
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -493,7 +493,7 @@ export default function AdminShowroomPage() {
                   </label>
                   <select
                     value={formData.statut}
-                    onChange={(e) => setFormData({ ...formData, statut: e.target.value as any })}
+                    onChange={(e) => setFormData({ ...formData, statut: e.target.value as 'disponible' | 'reserve' | 'vendu' })}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
                   >
                     <option value="disponible">Disponible</option>
@@ -585,6 +585,7 @@ export default function AdminShowroomPage() {
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {formData.photos.map((url, index) => (
                       <div key={index} className="relative group">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={url}
                           alt={`Preview ${index + 1}`}
@@ -690,6 +691,7 @@ export default function AdminShowroomPage() {
                   <tr key={vehicle.id} className="border-b hover:bg-gray-50">
                     <td className="px-6 py-4">
                       {vehicle.photos[0] && (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={vehicle.photos[0]}
                           alt={`${vehicle.marque} ${vehicle.modele}`}

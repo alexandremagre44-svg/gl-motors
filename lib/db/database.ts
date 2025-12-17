@@ -42,8 +42,8 @@ function getDb(): Database.Database {
 
     // Migration: Check if old columns exist and migrate data
     try {
-      const tableInfo = db.prepare("PRAGMA table_info(vehicles)").all() as any[];
-      const hasOldSchema = tableInfo.some((col: any) => col.name === 'name');
+      const tableInfo = db.prepare("PRAGMA table_info(vehicles)").all() as Array<{ name: string }>;
+      const hasOldSchema = tableInfo.some((col) => col.name === 'name');
       
       if (hasOldSchema) {
         // Migrate old data to new schema
@@ -108,11 +108,27 @@ export const vehicleDb = {
   getAll(): Vehicle[] {
     const db = getDb();
     const stmt = db.prepare('SELECT * FROM vehicles ORDER BY createdAt DESC');
-    const rows = stmt.all() as any[];
+    const rows = stmt.all() as Array<{
+      id: number;
+      marque: string;
+      modele: string;
+      annee: number;
+      kilometrage: number;
+      carburant: string;
+      boite: string;
+      prix: number;
+      description: string;
+      options: string;
+      photos: string;
+      statut: 'disponible' | 'reserve' | 'vendu';
+      isActive: number;
+      createdAt: string;
+      updatedAt: string;
+    }>;
     return rows.map(row => ({
       ...row,
-      options: JSON.parse(row.options || '[]'),
-      photos: JSON.parse(row.photos || '[]'),
+      options: JSON.parse(row.options || '[]') as string[],
+      photos: JSON.parse(row.photos || '[]') as string[],
       isActive: Boolean(row.isActive)
     }));
   },
@@ -121,12 +137,28 @@ export const vehicleDb = {
   getById(id: number): Vehicle | null {
     const db = getDb();
     const stmt = db.prepare('SELECT * FROM vehicles WHERE id = ?');
-    const row = stmt.get(id) as any;
+    const row = stmt.get(id) as {
+      id: number;
+      marque: string;
+      modele: string;
+      annee: number;
+      kilometrage: number;
+      carburant: string;
+      boite: string;
+      prix: number;
+      description: string;
+      options: string;
+      photos: string;
+      statut: 'disponible' | 'reserve' | 'vendu';
+      isActive: number;
+      createdAt: string;
+      updatedAt: string;
+    } | undefined;
     if (!row) return null;
     return {
       ...row,
-      options: JSON.parse(row.options || '[]'),
-      photos: JSON.parse(row.photos || '[]'),
+      options: JSON.parse(row.options || '[]') as string[],
+      photos: JSON.parse(row.photos || '[]') as string[],
       isActive: Boolean(row.isActive)
     };
   },
@@ -162,7 +194,7 @@ export const vehicleDb = {
     if (!current) return null;
 
     const updates: string[] = [];
-    const values: any[] = [];
+    const values: Array<string | number> = [];
 
     if (input.marque !== undefined) {
       updates.push('marque = ?');

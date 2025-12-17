@@ -38,7 +38,21 @@ export async function PUT(
     const id = parseInt(idStr);
     const body = await request.json();
 
-    const updateData: any = { id };
+    const updateData: {
+      id: number;
+      marque?: string;
+      modele?: string;
+      annee?: number;
+      kilometrage?: number;
+      carburant?: string;
+      boite?: string;
+      prix?: number;
+      description?: string;
+      options?: string[];
+      photos?: string[];
+      statut?: 'disponible' | 'reserve' | 'vendu';
+      isActive?: boolean;
+    } = { id };
     
     if (body.marque !== undefined) updateData.marque = body.marque;
     if (body.modele !== undefined) updateData.modele = body.modele;
