@@ -145,10 +145,9 @@ export const vehicleService = {
         return null;
       }
 
-      const current = doc.data()!;
       const now = new Date().toISOString();
 
-      const updatedData: any = {
+      const updatedData: Record<string, unknown> = {
         updatedAt: now,
       };
 

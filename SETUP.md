@@ -15,7 +15,7 @@
    Edit `.env.local` with your configuration:
    - Admin email and password hash
    - Session secret
-   - Cloudinary credentials (optional for development)
+   - Firebase credentials (REQUIRED - see below)
 
 3. **Generate admin password hash**
    ```bash
@@ -46,24 +46,21 @@
 
 ### Before Deploying
 
-1. **Important**: SQLite doesn't work on Vercel's serverless functions
-   - Migrate to Vercel Postgres, PlanetScale, or Supabase
-   - Update `lib/db/database.ts` with new database client
-   - Keep the same interface for minimal code changes
+1. **Configure Firebase** (REQUIS)
+   - Créez un projet sur Firebase Console: https://console.firebase.google.com/
+   - Activez Firestore Database et Storage
+   - Générez une clé de compte de service (Paramètres > Comptes de service)
+   - Configurez les règles Firestore (voir ci-dessous)
 
-2. **Configure Cloudinary**
-   - Sign up at https://cloudinary.com
-   - Get your credentials from the dashboard
-   - Add to Vercel environment variables
-
-3. **Set environment variables in Vercel**
+2. **Set environment variables in Vercel**
    ```
    ADMIN_EMAIL=your_email@example.com
    ADMIN_PASSWORD_HASH=your_generated_hash
    SESSION_SECRET=generate_with_crypto_randomBytes
-   CLOUDINARY_CLOUD_NAME=your_cloud_name
-   CLOUDINARY_API_KEY=your_api_key
-   CLOUDINARY_API_SECRET=your_api_secret
+   FIREBASE_PROJECT_ID=your-project-id
+   FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@your-project-id.iam.gserviceaccount.com
+   FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour Private Key\n-----END PRIVATE KEY-----\n"
+   FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
    NODE_ENV=production
    ```
 

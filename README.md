@@ -7,8 +7,8 @@ Site web professionnel pour GL MOTORS, un garage automobile local spécialisé d
 - **Framework**: Next.js 15 (App Router)
 - **Langage**: TypeScript
 - **Styling**: Tailwind CSS
-- **Base de données**: SQLite (better-sqlite3)
-- **Images**: Cloudinary
+- **Base de données**: Firebase Firestore
+- **Stockage d'images**: Firebase Storage
 - **Déploiement**: Vercel
 
 ## 📁 Structure du Projet
@@ -24,7 +24,7 @@ gl-motors/
 │   │   └── showroom/        # Administration showroom
 │   └── api/
 │       ├── vehicles/        # API CRUD véhicules
-│       ├── upload/          # API upload Cloudinary
+│       ├── upload/          # API upload Firebase Storage
 │       └── admin/auth/      # API authentification admin
 ├── components/              # Composants réutilisables
 │   ├── Header.tsx
@@ -34,12 +34,12 @@ gl-motors/
 │   └── VehicleCard.tsx
 ├── lib/
 │   ├── db/
-│   │   ├── schema.ts        # Schéma de données
-│   │   └── database.ts      # Abstraction base de données
+│   │   └── schema.ts        # Schéma de données
+│   ├── firebase.ts          # Initialisation Firebase
+│   ├── vehicles.service.ts  # Service Firestore véhicules
 │   └── auth.ts              # Utilitaires authentification
-├── public/
-│   └── images/              # Images statiques
-└── data/                    # Base de données SQLite (généré)
+└── public/
+    └── images/              # Images statiques
 ```
 
 ## 🛠️ Installation
@@ -70,16 +70,23 @@ cp .env.example .env.local
 ADMIN_EMAIL=admin@glmotors.fr
 ADMIN_PASSWORD_HASH=<votre_hash_bcrypt>
 
-# Cloudinary Configuration
-CLOUDINARY_CLOUD_NAME=<votre_cloud_name>
-CLOUDINARY_API_KEY=<votre_api_key>
-CLOUDINARY_API_SECRET=<votre_api_secret>
+# Firebase Configuration (REQUIS)
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@your-project-id.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour Private Key Here\n-----END PRIVATE KEY-----\n"
+FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
 ```
 
 **Générer un hash de mot de passe** :
 ```bash
 node -e "console.log(require('bcryptjs').hashSync('votre_mot_de_passe', 10))"
 ```
+
+**Configuration Firebase** :
+1. Créez un projet sur [Firebase Console](https://console.firebase.google.com/)
+2. Allez dans Paramètres du projet > Comptes de service
+3. Cliquez sur "Générer une nouvelle clé privée"
+4. Copiez les valeurs dans `.env.local`
 
 4. **Ajouter une image de garage**
 
@@ -122,32 +129,37 @@ L'accès à l'administration est protégé par :
 
 ⚠️ **Important** : Changez ces identifiants en production !
 
-## 🖼️ Configuration Cloudinary
+## 💾 Base de Données Firebase
 
-1. Créez un compte sur [Cloudinary](https://cloudinary.com/)
-2. Récupérez vos credentials dans le Dashboard
-3. Ajoutez-les dans `.env.local`
+Le projet utilise Firebase pour la persistance des données :
 
-Les images sont automatiquement uploadées dans un dossier `gl-motors` sur Cloudinary.
+### Firestore
+- Collection `vehicles` pour stocker les véhicules
+- Synchronisation en temps réel entre admin et site client
+- Accessible depuis n'importe où (local et Vercel)
 
-## 💾 Base de Données
+### Firebase Storage
+- Stockage des images de véhicules
+- URLs publiques pour l'affichage
+- Dossier `vehicles/` pour l'organisation
 
-Le projet utilise SQLite avec `better-sqlite3` pour la persistance :
-- Base créée automatiquement au premier lancement
-- Stockée dans `/data/vehicles.db`
-- Architecture permettant de migrer facilement vers PostgreSQL/MySQL
-
-### Schéma Vehicle
+### Schéma Vehicle (Firestore)
 
 ```typescript
 {
   id: number;
-  name: string;
-  year: number;
-  mileage: number;
-  price: number;
-  status: 'available' | 'sold';
-  images: string[];
+  marque: string;
+  modele: string;
+  annee: number;
+  kilometrage: number;
+  carburant: string;
+  boite: string;
+  prix: number;
+  description: string;
+  options: string[];
+  photos: string[];
+  statut: 'disponible' | 'reserve' | 'vendu';
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -160,9 +172,11 @@ Le projet utilise SQLite avec `better-sqlite3` pour la persistance :
 2. **Configurer les variables d'environnement** dans Vercel :
    - `ADMIN_EMAIL`
    - `ADMIN_PASSWORD_HASH`
-   - `CLOUDINARY_CLOUD_NAME`
-   - `CLOUDINARY_API_KEY`
-   - `CLOUDINARY_API_SECRET`
+   - `SESSION_SECRET`
+   - `FIREBASE_PROJECT_ID`
+   - `FIREBASE_CLIENT_EMAIL`
+   - `FIREBASE_PRIVATE_KEY`
+   - `FIREBASE_STORAGE_BUCKET`
    - `NODE_ENV=production`
 
 3. **Déployer**
@@ -170,13 +184,7 @@ Le projet utilise SQLite avec `better-sqlite3` pour la persistance :
 npm run build
 ```
 
-⚠️ **Note sur la base de données** : SQLite fonctionne localement mais Vercel utilise des fonctions serverless. Pour la production, considérez :
-- Vercel Postgres
-- PlanetScale
-- Supabase
-- Ou toute base de données cloud
-
-L'abstraction dans `/lib/db/database.ts` facilite la migration.
+✅ **Firebase et Vercel** : Firebase fonctionne parfaitement avec Vercel grâce à son architecture cloud. Aucune configuration supplémentaire nécessaire !
 
 ## 🎨 Design & Identité
 
