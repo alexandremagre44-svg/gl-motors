@@ -1,8 +1,9 @@
 import { vehicleStore } from "@/lib/vehicles.store";
 import VehicleCard from "@/components/VehicleCard";
+import { siteConfig } from "@/lib/site.config";
 
 export const metadata = {
-  title: "Showroom - Véhicules disponibles - GL MOTORS",
+  title: `Showroom - Véhicules disponibles - ${siteConfig.name}`,
   description: "Découvrez nos véhicules d'occasion disponibles à la vente.",
 };
 
@@ -88,7 +89,7 @@ export default function ShowroomPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
             <a
-              href="tel:+33123456789"
+              href={`tel:${siteConfig.contact.phone}`}
               className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 md:px-8 md:py-4 rounded-lg transition-colors"
             >
               📞 Appeler

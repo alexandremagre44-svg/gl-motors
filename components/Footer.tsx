@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { siteConfig } from '@/lib/site.config';
 
 export default function Footer() {
   return (
@@ -8,10 +9,10 @@ export default function Footer() {
           {/* About */}
           <div>
             <h3 className="text-xl font-bold mb-4">
-              <span className="text-red-600">GL</span> MOTORS
+              <span className="text-red-600">GL</span> {siteConfig.name.replace('GL ', '')}
             </h3>
             <p className="text-gray-400">
-              Votre garage de confiance pour l'entretien et la réparation de tous types de véhicules.
+              {siteConfig.description}
             </p>
           </div>
 
@@ -47,15 +48,15 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="tel:+33123456789" className="hover:text-red-600 transition-colors">
-                  📞 +33 1 23 45 67 89
+                <a href={`tel:${siteConfig.contact.phone}`} className="hover:text-red-600 transition-colors">
+                  📞 {siteConfig.contact.phoneFormatted}
                 </a>
               </li>
-              <li>123 Rue de l'Automobile</li>
-              <li>75001 Paris</li>
+              <li>{siteConfig.contact.address.street}</li>
+              <li>{siteConfig.contact.address.zip} {siteConfig.contact.address.city}</li>
               <li>
-                <a href="mailto:contact@glmotors.fr" className="hover:text-red-600 transition-colors">
-                  ✉️ contact@glmotors.fr
+                <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-red-600 transition-colors">
+                  ✉️ {siteConfig.contact.email}
                 </a>
               </li>
             </ul>
@@ -63,7 +64,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} GL MOTORS. Tous droits réservés.</p>
+          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

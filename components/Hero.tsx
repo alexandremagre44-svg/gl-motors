@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { siteConfig } from '@/lib/site.config';
 
 interface HeroProps {
   title: string;
@@ -25,7 +26,7 @@ export default function Hero({ title, subtitle, showCTA = true }: HeroProps) {
         {/* Logo */}
         <div className="mb-8">
           <h1 className="text-5xl md:text-7xl font-bold mb-2">
-            <span className="text-red-600">GL</span> MOTORS
+            <span className="text-red-600">GL</span> {siteConfig.name.replace('GL ', '')}
           </h1>
         </div>
 
@@ -43,7 +44,7 @@ export default function Hero({ title, subtitle, showCTA = true }: HeroProps) {
         {showCTA && (
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+33123456789"
+              href={`tel:${siteConfig.contact.phone}`}
               className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-4 rounded-lg transition-colors"
             >
               📞 Appeler

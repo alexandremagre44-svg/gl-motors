@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import ServiceCard from "@/components/ServiceCard";
 import Link from "next/link";
+import { siteConfig } from "@/lib/site.config";
 
 export default function Home() {
   const services = [
@@ -43,8 +44,8 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <Hero
-        title="Garage automobile à Paris"
-        subtitle="Entretien, mécanique et diagnostic toutes marques"
+        title={siteConfig.title}
+        subtitle={siteConfig.slogan}
       />
 
       {/* Services Section */}
@@ -113,7 +114,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+33123456789"
+              href={`tel:${siteConfig.contact.phone}`}
               className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-4 rounded-lg transition-colors"
             >
               📞 Appeler maintenant

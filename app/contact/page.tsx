@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { siteConfig } from '@/lib/site.config';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -59,10 +60,10 @@ export default function ContactPage() {
                       Téléphone
                     </h3>
                     <a
-                      href="tel:+33123456789"
+                      href={`tel:${siteConfig.contact.phone}`}
                       className="text-red-600 hover:text-red-700 text-lg"
                     >
-                      +33 1 23 45 67 89
+                      {siteConfig.contact.phoneFormatted}
                     </a>
                   </div>
                 </div>
@@ -77,9 +78,9 @@ export default function ContactPage() {
                       Adresse
                     </h3>
                     <p className="text-gray-600">
-                      123 Rue de l'Automobile<br />
-                      75001 Paris<br />
-                      France
+                      {siteConfig.contact.address.street}<br />
+                      {siteConfig.contact.address.zip} {siteConfig.contact.address.city}<br />
+                      {siteConfig.contact.address.country}
                     </p>
                   </div>
                 </div>
@@ -94,9 +95,9 @@ export default function ContactPage() {
                       Horaires d'ouverture
                     </h3>
                     <div className="text-gray-600 space-y-1">
-                      <p><strong>Lundi - Vendredi:</strong> 8h00 - 18h00</p>
-                      <p><strong>Samedi:</strong> 9h00 - 12h00</p>
-                      <p><strong>Dimanche:</strong> Fermé</p>
+                      <p><strong>Lundi - Vendredi:</strong> {siteConfig.openingHoursSummary.weekdays}</p>
+                      <p><strong>Samedi:</strong> {siteConfig.openingHoursSummary.saturday}</p>
+                      <p><strong>Dimanche:</strong> {siteConfig.openingHoursSummary.sunday}</p>
                     </div>
                   </div>
                 </div>
@@ -111,10 +112,10 @@ export default function ContactPage() {
                       Email
                     </h3>
                     <a
-                      href="mailto:contact@glmotors.fr"
+                      href={`mailto:${siteConfig.contact.email}`}
                       className="text-red-600 hover:text-red-700 text-lg"
                     >
-                      contact@glmotors.fr
+                      {siteConfig.contact.email}
                     </a>
                   </div>
                 </div>

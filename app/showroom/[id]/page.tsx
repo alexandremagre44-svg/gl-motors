@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { vehicleStore } from '@/lib/vehicles.store';
+import { siteConfig } from '@/lib/site.config';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,12 +16,12 @@ export async function generateMetadata({ params }: PageProps) {
   
   if (!vehicle) {
     return {
-      title: 'Véhicule non trouvé - GL MOTORS',
+      title: `Véhicule non trouvé - ${siteConfig.name}`,
     };
   }
 
   return {
-    title: `${vehicle.marque} ${vehicle.modele} ${vehicle.annee} - GL MOTORS`,
+    title: `${vehicle.marque} ${vehicle.modele} ${vehicle.annee} - ${siteConfig.name}`,
     description: vehicle.description || `${vehicle.marque} ${vehicle.modele} ${vehicle.annee} - ${vehicle.kilometrage.toLocaleString()} km - ${vehicle.prix.toLocaleString()} €`,
   };
 }
@@ -192,7 +193,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
 
               <div className="space-y-3 md:space-y-4">
                 <a
-                  href="tel:+33123456789"
+                  href={`tel:${siteConfig.contact.phone}`}
                   className="block w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 md:py-4 md:px-6 rounded-lg text-center transition-colors text-sm md:text-base"
                 >
                   📞 Appeler le garage
