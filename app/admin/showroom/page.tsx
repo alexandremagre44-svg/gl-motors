@@ -588,7 +588,7 @@ export default function AdminShowroomPage() {
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={url}
-                          alt={`Preview ${index + 1}`}
+                          alt={`Photo ${index + 1} de ${formData.marque || 'véhicule'} ${formData.modele || ''}`}
                           className="w-full h-32 object-cover rounded-lg"
                         />
                         <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center gap-2">
@@ -694,7 +694,7 @@ export default function AdminShowroomPage() {
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={vehicle.photos[0]}
-                          alt={`${vehicle.marque} ${vehicle.modele}`}
+                          alt={`Photo principale de ${vehicle.marque} ${vehicle.modele}`}
                           className="w-20 h-14 object-cover rounded"
                         />
                       )}

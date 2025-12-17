@@ -87,10 +87,10 @@ export default async function VehicleDetailPage({ params }: PageProps) {
             {vehicle.photos.length > 1 && (
               <div className="grid grid-cols-4 gap-4 mb-8">
                 {vehicle.photos.map((photo, index) => (
-                  <div key={index} className="relative h-24 bg-gray-200 rounded-lg overflow-hidden cursor-pointer hover:opacity-75 transition-opacity">
+                  <div key={index} className="relative h-24 bg-gray-200 rounded-lg overflow-hidden">
                     <Image
                       src={photo}
-                      alt={`${vehicle.marque} ${vehicle.modele} - Photo ${index + 1}`}
+                      alt={`${vehicle.marque} ${vehicle.modele} - Photo ${index + 1} sur ${vehicle.photos.length}`}
                       fill
                       className="object-cover"
                       unoptimized={photo.includes('cloudinary')}
