@@ -1,23 +1,26 @@
-import bcrypt from 'bcryptjs';
+/**
+ * Auth admin SIMPLE
+ * - email + password en clair
+ * - compatible Vercel
+ * - aucune dépendance externe
+ */
 
-// Simple authentication check
-export function checkAuth(email: string, password: string): boolean {
+export function checkAdminCredentials(
+  email?: string,
+  password?: string
+): boolean {
+  if (!email || !password) return false;
+
   const adminEmail = process.env.ADMIN_EMAIL;
-  const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  if (!adminEmail || !adminPasswordHash) {
-    console.error('Admin credentials not configured');
+  if (!adminEmail || !adminPassword) {
+    console.error("ADMIN ENV MISSING");
     return false;
   }
 
-  if (email !== adminEmail) {
-    return false;
-  }
-
-  return bcrypt.compareSync(password, adminPasswordHash);
-}
-
-// Generate password hash (for setup)
-export function hashPassword(password: string): string {
-  return bcrypt.hashSync(password, 10);
+  return (
+    email.trim() === adminEmail &&
+    password.trim() === adminPassword
+  );
 }
