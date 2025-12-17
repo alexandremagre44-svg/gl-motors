@@ -1,7 +1,7 @@
 import { Vehicle, CreateVehicleInput, UpdateVehicleInput } from './db/schema';
 
 // In-memory storage for vehicles
-let vehicles: Vehicle[] = [];
+const vehicles: Vehicle[] = [];
 let nextId = 1;
 
 // Initialize with sample data
