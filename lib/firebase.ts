@@ -1,36 +1,43 @@
-import admin from "firebase-admin";
+import { initializeApp, getApps, cert } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 
-if (!process.env.FIREBASE_PROJECT_ID) {
-  throw new Error("Missing FIREBASE_PROJECT_ID");
-}
-if (!process.env.FIREBASE_CLIENT_EMAIL) {
-  throw new Error("Missing FIREBASE_CLIENT_EMAIL");
-}
-if (!process.env.FIREBASE_PRIVATE_KEY) {
-  throw new Error("Missing FIREBASE_PRIVATE_KEY");
-}
+let app: any;
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-    }),
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+function initFirebase() {
+  if (app) return app;
+
+  const base64 = process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
+  const bucket = process.env.FIREBASE_STORAGE_BUCKET;
+
+  if (!base64) {
+    throw new Error("FIREBASE_SERVICE_ACCOUNT_BASE64 manquant");
+  }
+
+  if (!bucket) {
+    throw new Error("FIREBASE_STORAGE_BUCKET manquant");
+  }
+
+  const json = JSON.parse(
+    Buffer.from(base64, "base64").toString("utf8")
+  );
+
+  app = initializeApp({
+    credential: cert(json),
+    storageBucket: bucket,
   });
+
+  return app;
 }
 
-/**
- * 🔥 Firestore
- */
+/* ========= EXPORTS ========= */
+
 export function getFirestoreDb() {
-  return admin.firestore();
+  initFirebase();
+  return getFirestore();
 }
 
-/**
- * 🔥 Firebase Storage
- */
 export function getFirebaseStorage() {
-  return admin.storage().bucket();
+  initFirebase();
+  return getStorage();
 }
