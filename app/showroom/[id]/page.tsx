@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { vehicleStore } from '@/lib/vehicles.store';
+import { vehicleService } from '@/lib/vehicles.service';
 import { siteConfig } from '@/lib/site.config';
 
 export const dynamic = 'force-dynamic';
@@ -12,7 +12,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
-  const vehicle = vehicleStore.getById(parseInt(id));
+  const vehicle = await vehicleService.getById(parseInt(id));
   
   if (!vehicle) {
     return {
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function VehicleDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const vehicle = vehicleStore.getById(parseInt(id));
+  const vehicle = await vehicleService.getById(parseInt(id));
 
   if (!vehicle || !vehicle.isActive) {
     notFound();

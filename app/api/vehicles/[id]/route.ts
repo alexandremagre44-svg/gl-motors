@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { vehicleStore } from '@/lib/vehicles.store';
+import { vehicleService } from '@/lib/vehicles.service';
 
 // Force Node.js runtime for Vercel compatibility
 export const runtime = 'nodejs';
@@ -12,7 +12,7 @@ export async function GET(
   try {
     const { id: idStr } = await params;
     const id = parseInt(idStr);
-    const vehicle = vehicleStore.getById(id);
+    const vehicle = await vehicleService.getById(id);
     
     if (!vehicle) {
       return NextResponse.json(
@@ -70,7 +70,7 @@ export async function PUT(
     if (body.statut !== undefined) updateData.statut = body.statut;
     if (body.isActive !== undefined) updateData.isActive = body.isActive;
 
-    const vehicle = vehicleStore.update(updateData);
+    const vehicle = await vehicleService.update(updateData);
 
     if (!vehicle) {
       return NextResponse.json(
@@ -97,7 +97,7 @@ export async function DELETE(
   try {
     const { id: idStr } = await params;
     const id = parseInt(idStr);
-    const success = vehicleStore.delete(id);
+    const success = await vehicleService.delete(id);
 
     if (!success) {
       return NextResponse.json(

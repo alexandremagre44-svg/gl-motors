@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { vehicleStore } from '@/lib/vehicles.store';
+import { vehicleService } from '@/lib/vehicles.service';
 
 // Force Node.js runtime for Vercel compatibility
 export const runtime = 'nodejs';
@@ -7,7 +7,7 @@ export const runtime = 'nodejs';
 // GET all vehicles
 export async function GET() {
   try {
-    const vehicles = vehicleStore.getAll();
+    const vehicles = await vehicleService.getAll();
     return NextResponse.json(vehicles);
   } catch (error) {
     console.error('Error fetching vehicles:', error);
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const vehicle = vehicleStore.create({
+    const vehicle = await vehicleService.create({
       marque: body.marque,
       modele: body.modele,
       annee: parseInt(body.annee),
