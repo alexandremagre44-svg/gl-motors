@@ -33,7 +33,7 @@ export default function Home() {
   ];
 
   const trustPoints = [
-    "Plus de 15 ans d'expérience",
+    “Une expertise construite au fil des années”,
     "Équipe de mécaniciens qualifiés",
     "Équipements modernes et performants",
     "Garantie sur toutes nos interventions",
@@ -107,7 +107,7 @@ export default function Home() {
       <section className="py-20 bg-gray-900 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-4">
-            Besoin d'un entretien ou d'une réparation ?
+            Besoin d'un entretien ou d'une réparation ou d'un diagnostic ?
           </h2>
           <p className="text-xl text-gray-300 mb-8">
             Contactez-nous dès maintenant pour un rendez-vous
