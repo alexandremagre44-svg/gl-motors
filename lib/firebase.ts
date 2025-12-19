@@ -1,43 +1,30 @@
-import { initializeApp, getApps, cert } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
-import { getStorage } from "firebase-admin/storage";
+import admin from "firebase-admin";
 
-let app: any;
+let app: admin.app.App | null = null;
 
-function initFirebase() {
+export function initFirebase() {
   if (app) return app;
 
-  const base64 = process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
-  const bucket = process.env.FIREBASE_STORAGE_BUCKET;
+  const projectId = process.env.FIREBASE_PROJECT_ID;
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 
-  if (!base64) {
-    throw new Error("FIREBASE_SERVICE_ACCOUNT_BASE64 manquant");
-  }
+  if (!projectId) throw new Error("FIREBASE_PROJECT_ID manquant");
+  if (!clientEmail) throw new Error("FIREBASE_CLIENT_EMAIL manquant");
+  if (!privateKey) throw new Error("FIREBASE_PRIVATE_KEY manquant");
 
-  if (!bucket) {
-    throw new Error("FIREBASE_STORAGE_BUCKET manquant");
-  }
-
-  const json = JSON.parse(
-    Buffer.from(base64, "base64").toString("utf8")
-  );
-
-  app = initializeApp({
-    credential: cert(json),
-    storageBucket: bucket,
+  app = admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId,
+      clientEmail,
+      privateKey,
+    }),
   });
 
   return app;
 }
 
-/* ========= EXPORTS ========= */
-
 export function getFirestoreDb() {
-  initFirebase();
-  return getFirestore();
-}
-
-export function getFirebaseStorage() {
-  initFirebase();
-  return getStorage();
+  const firebaseApp = initFirebase();
+  return firebaseApp.firestore();
 }

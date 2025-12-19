@@ -6,16 +6,16 @@ export const siteConfig = {
   },
   slogan: "Entretien, mécanique et diagnostic toutes marques",
   description: "Votre garage de confiance pour l'entretien et la réparation de tous types de véhicules.",
-  title: "Garage automobile à Paris",
+  title: "Garage automobile à Le Loroux-Bottereau",
 
   contact: {
-    phone: "+33123456789",
-    phoneFormatted: "+33 1 23 45 67 89",
+    phone: "+33674465008",
+    phoneFormatted: "+33 6 74 46 50 08",
     email: "contact@glmotors.fr",
     address: {
-      street: "123 Rue de l'Automobile",
-      zip: "75001",
-      city: "Paris",
+      street: "17 Rte de Barbechat",
+      zip: "44430",
+      city: "Le Loroux-Bottereau",
       country: "France",
     },
   },
