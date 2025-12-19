@@ -33,7 +33,7 @@ export default function Home() {
   ];
 
   const trustPoints = [
-    “Une expertise construite au fil des années”,
+    "Une expertise construite au fil des années",
     "Équipe de mécaniciens qualifiés",
     "Équipements modernes et performants",
     "Garantie sur toutes nos interventions",
