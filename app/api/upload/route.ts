@@ -40,8 +40,7 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(await file.arrayBuffer());
 
     // 🔥 ICI LE FIX
-    const storage = getFirebaseStorage();
-    const bucket: Bucket = storage.bucket();
+    const bucket: Bucket = getFirebaseStorage();
 
     const timestamp = Date.now();
     const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
