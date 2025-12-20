@@ -11,28 +11,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/services`,
+      url: `${baseUrl}/garage-le-loroux-bottereau`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/garage-le-loroux-bottereau`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
       url: `${baseUrl}/garage-auto-le-loroux-bottereau`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 1,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/mecanicien-le-loroux-bottereau`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 1,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/faq`,
@@ -44,13 +44,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/showroom`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.7,
+      priority: 0.6,
     },
   ]
 }

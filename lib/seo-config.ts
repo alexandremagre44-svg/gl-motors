@@ -70,6 +70,7 @@ export function generateLocalBusinessSchema() {
         closes: "18:00",
       },
     ],
+    // NOTE: Update these values with actual Google Business Profile metrics
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.8",

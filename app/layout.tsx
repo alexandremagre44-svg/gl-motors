@@ -31,7 +31,7 @@ export default function RootLayout({
 
   return (
     <html lang="fr">
-      <head>
+      <body className="antialiased">
         {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
@@ -45,8 +45,6 @@ export default function RootLayout({
             __html: JSON.stringify(organizationSchema),
           }}
         />
-      </head>
-      <body className="antialiased">
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
