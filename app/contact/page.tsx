@@ -14,7 +14,6 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, this would send to an API
     console.log('Form submitted:', formData);
     setSubmitted(true);
     setTimeout(() => {
@@ -23,7 +22,9 @@ export default function ContactPage() {
     }, 3000);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -78,8 +79,11 @@ export default function ContactPage() {
                       Adresse
                     </h3>
                     <p className="text-gray-600">
-                      {siteConfig.contact.address.street}<br />
-                      {siteConfig.contact.address.zip} {siteConfig.contact.address.city}<br />
+                      {siteConfig.contact.address.street}
+                      <br />
+                      {siteConfig.contact.address.zip}{' '}
+                      {siteConfig.contact.address.city}
+                      <br />
                       {siteConfig.contact.address.country}
                     </p>
                   </div>
@@ -95,9 +99,15 @@ export default function ContactPage() {
                       Horaires d'ouverture
                     </h3>
                     <div className="text-gray-600 space-y-1">
-                      <p><strong>Lundi - Vendredi:</strong> {siteConfig.openingHoursSummary.weekdays}</p>
-                      <p><strong>Samedi:</strong> {siteConfig.openingHoursSummary.saturday}</p>
-                      <p><strong>Dimanche:</strong> {siteConfig.openingHoursSummary.sunday}</p>
+                      <p>
+                        <strong>Lundi - Vendredi:</strong>{' '}
+                        {siteConfig.openingHoursSummary.weekdays}
+                      </p>
+                 
+                      <p>
+                        <strong>Samedi,Dimanche:</strong>{' '}
+                        {siteConfig.openingHoursSummary.sunday}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -124,16 +134,15 @@ export default function ContactPage() {
 
             {/* Map */}
             <div className="mt-8 bg-white rounded-lg shadow overflow-hidden h-80">
-              {/* TODO: Replace with your actual garage location coordinates */}
               <iframe
-                src="https://www.google.com/maps/place/Garage+GL+MOTORS/@47.2430015,-1.3419023,18.53z/data=!4m6!3m5!1s0x4805e3d2f8bda74f:0x275e86a91cb1510e!8m2!3d47.242975!4d-1.3412874!16s%2Fg%2F11ybnmltk0?hl=fr-FR&entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
+                src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d643.2726944631607!2d-1.3415840004696002!3d47.24289483050044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x4805e3d2f8bda74f%3A0x275e86a91cb1510e!2s17%20Rte%20de%20Barbechat%2C%2044430%20Le%20Loroux-Bottereau!3m2!1d47.242975!2d-1.3412874!5e0!3m2!1sfr!2sfr!4v1766221109110!5m2!1sfr!2sfr"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+              />
             </div>
           </div>
 
@@ -143,7 +152,10 @@ export default function ContactPage() {
               Envoyez-nous un message
             </h2>
 
-            <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white p-8 rounded-lg shadow"
+            >
               {submitted && (
                 <div className="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
                   Merci ! Votre message a été envoyé avec succès.
@@ -151,7 +163,10 @@ export default function ContactPage() {
               )}
 
               <div className="mb-6">
-                <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
+                <label
+                  htmlFor="name"
+                  className="block text-gray-700 font-semibold mb-2"
+                >
                   Nom complet *
                 </label>
                 <input
@@ -166,7 +181,10 @@ export default function ContactPage() {
               </div>
 
               <div className="mb-6">
-                <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-gray-700 font-semibold mb-2"
+                >
                   Email *
                 </label>
                 <input
@@ -181,7 +199,10 @@ export default function ContactPage() {
               </div>
 
               <div className="mb-6">
-                <label htmlFor="phone" className="block text-gray-700 font-semibold mb-2">
+                <label
+                  htmlFor="phone"
+                  className="block text-gray-700 font-semibold mb-2"
+                >
                   Téléphone
                 </label>
                 <input
@@ -195,7 +216,10 @@ export default function ContactPage() {
               </div>
 
               <div className="mb-6">
-                <label htmlFor="message" className="block text-gray-700 font-semibold mb-2">
+                <label
+                  htmlFor="message"
+                  className="block text-gray-700 font-semibold mb-2"
+                >
                   Message *
                 </label>
                 <textarea
@@ -206,7 +230,7 @@ export default function ContactPage() {
                   required
                   rows={6}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
-                ></textarea>
+                />
               </div>
 
               <button

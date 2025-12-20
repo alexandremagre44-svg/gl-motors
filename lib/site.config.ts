@@ -26,8 +26,7 @@ export const siteConfig = {
     { day: "Mercredi", hours: "8h00 - 18h00" },
     { day: "Jeudi", hours: "8h00 - 18h00" },
     { day: "Vendredi", hours: "8h00 - 18h00" },
-    { day: "Samedi", hours: "9h00 - 12h00" },
-    { day: "Dimanche", hours: "Fermé" },
+    { day: "Samedi,Dimanche", hours: "Fermé" },
   ],
 
   openingHoursSummary: {
