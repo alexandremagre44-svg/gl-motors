@@ -40,7 +40,7 @@ export default function GarageAutoLeLoroux() {
               className="inline-block bg-white hover:bg-gray-100 text-gray-900 font-semibold px-8 py-4 rounded-lg transition-colors text-center"
             >
               Devis en ligne gratuit
-            </a>
+            </Link>
           </div>
         </div>
       </div>
