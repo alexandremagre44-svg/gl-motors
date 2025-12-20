@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { siteConfig } from '@/lib/site.config';
 
+// Metadata is exported from a separate file since this is a client component
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -36,9 +37,12 @@ export default function ContactPage() {
       {/* Header */}
       <div className="bg-gray-900 text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-4">Contactez-nous</h1>
+          <h1 className="text-5xl font-bold mb-4">
+            Contact Garage Le Loroux-Bottereau
+          </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Nous sommes là pour répondre à toutes vos questions
+            Devis gratuit, prise de rendez-vous, conseils - Nous répondons à
+            toutes vos questions
           </p>
         </div>
       </div>
