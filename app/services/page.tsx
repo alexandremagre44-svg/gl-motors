@@ -1,11 +1,19 @@
 import ServiceCard from "@/components/ServiceCard";
 import { siteConfig } from "@/lib/site.config";
+import { generatePageMetadata } from "@/lib/seo-config";
 
-export const metadata = {
-  title: `Nos Services - ${siteConfig.name}`,
+export const metadata = generatePageMetadata({
+  title: "Services Garage Auto Le Loroux-Bottereau - GL Motors 44430",
   description:
-    "Découvrez tous nos services automobiles : entretien, réparation, diagnostic et plus encore.",
-};
+    "Services garage automobile : entretien, diagnostic, réparation, reprogrammation. Toutes marques. Le Loroux-Bottereau ☎ 06 74 46 50 08",
+  path: "/services",
+  keywords: [
+    "entretien auto",
+    "révision voiture",
+    "diagnostic automobile",
+    "reprogrammation moteur",
+  ],
+});
 
 export default function ServicesPage() {
   const services = [
