@@ -176,7 +176,7 @@ export default function GarageLeLoroux() {
                   ✓ Expertise Reconnue
                 </h3>
                 <p className="text-gray-700">
-                  Plus de 15 ans d'expérience en mécanique automobile.
+                  Plus de 5 ans d'expérience en mécanique automobile.
                   Compétences en diagnostic électronique et reprogrammation
                   moteur. Formation continue sur les nouvelles technologies.
                 </p>

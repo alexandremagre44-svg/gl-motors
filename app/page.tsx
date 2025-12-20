@@ -121,7 +121,7 @@ export default function Home() {
                     Mécanicien Expert
                   </h3>
                   <p className="text-sm">
-                    Plus de 15 ans d'expérience. Diagnostic électronique,
+                    Plus de 5 ans d'expérience. Diagnostic électronique,
                     reprogrammation moteur, mécanique toutes marques.
                   </p>
                 </div>
@@ -149,7 +149,7 @@ export default function Home() {
           </h2>
           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
             Un service professionnel, de proximité et de confiance depuis plus de
-            15 ans
+            5 ans
           </p>
 
           <div className="max-w-3xl mx-auto">

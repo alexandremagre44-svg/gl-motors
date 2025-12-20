@@ -59,7 +59,7 @@ export default function MecanicienLeLoroux() {
                 à Le Loroux-Bottereau ou dans les environs (Vallet, La
                 Chapelle-Heulin, Clisson, Vertou) ? GL Motors met à votre
                 disposition son expertise en mécanique automobile avec{" "}
-                <strong>plus de 15 ans d'expérience</strong> dans la réparation
+                <strong>plus de 5 ans d'expérience</strong> dans la réparation
                 et l'entretien de véhicules.
               </p>
               <p>
@@ -332,7 +332,7 @@ export default function MecanicienLeLoroux() {
                   Expérience Terrain
                 </h3>
                 <p className="text-gray-700">
-                  Plus de 15 ans d'expérience en mécanique automobile sur tous
+                  Plus de 5 ans d'expérience en mécanique automobile sur tous
                   types de véhicules. Expertise reconnue en diagnostic et
                   réparations complexes.
                 </p>

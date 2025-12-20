@@ -255,7 +255,7 @@ export default function GarageAutoLeLoroux() {
                 <div>
                   <p className="font-semibold">Expertise Technique</p>
                   <p>
-                    Plus de 15 ans d'expérience, formation continue sur les
+                    Plus de 5 ans d'expérience, formation continue sur les
                     nouvelles technologies automobiles (hybride, électrique,
                     électronique embarquée).
                   </p>
