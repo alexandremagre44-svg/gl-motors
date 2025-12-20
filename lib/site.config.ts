@@ -21,16 +21,16 @@ export const siteConfig = {
   },
 
   openingHours: [
-    { day: "Lundi", hours: "8h00 - 18h00" },
-    { day: "Mardi", hours: "8h00 - 18h00" },
-    { day: "Mercredi", hours: "8h00 - 18h00" },
-    { day: "Jeudi", hours: "8h00 - 18h00" },
-    { day: "Vendredi", hours: "8h00 - 18h00" },
+    { day: "Lundi", hours: "8h30 - 18h00" },
+    { day: "Mardi", hours: "8h30 - 18h00" },
+    { day: "Mercredi", hours: "8h30 - 18h00" },
+    { day: "Jeudi", hours: "8h30 - 18h00" },
+    { day: "Vendredi", hours: "8h30 - 18h00" },
     { day: "Samedi,Dimanche", hours: "Fermé" },
   ],
 
   openingHoursSummary: {
-    weekdays: "8h00 - 18h00",
+    weekdays: "8h30 - 18h00",
     saturday: "9h00 - 12h00",
     sunday: "Fermé",
   },
