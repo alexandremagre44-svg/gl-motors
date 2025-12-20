@@ -11,7 +11,7 @@ export const siteConfig = {
   contact: {
     phone: "+33674465008",
     phoneFormatted: "+33 6 74 46 50 08",
-    email: "contact@glmotors.fr",
+    email: "glmotors49@gmail.com",
     address: {
       street: "17 Rte de Barbechat",
       zip: "44430",

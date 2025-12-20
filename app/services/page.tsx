@@ -3,7 +3,8 @@ import { siteConfig } from "@/lib/site.config";
 
 export const metadata = {
   title: `Nos Services - ${siteConfig.name}`,
-  description: "Découvrez tous nos services automobiles : entretien, réparation, diagnostic et plus encore.",
+  description:
+    "Découvrez tous nos services automobiles : entretien, réparation, diagnostic et plus encore.",
 };
 
 export default function ServicesPage() {
@@ -11,62 +12,74 @@ export default function ServicesPage() {
     {
       icon: "🔧",
       title: "Entretien & Révision",
-      description: "Entretien régulier selon le carnet constructeur. Vidange, filtres, contrôles de sécurité. Révisions complètes avec rapport détaillé.",
+      description:
+        "Entretien régulier selon le carnet constructeur. Vidange, filtres, contrôles de sécurité. Révisions complètes avec rapport détaillé.",
     },
     {
       icon: "🛑",
       title: "Système de Freinage",
-      description: "Contrôle et remplacement de plaquettes, disques, liquide de frein. Diagnostic complet du système de freinage pour votre sécurité.",
+      description:
+        "Contrôle et remplacement de plaquettes, disques, liquide de frein. Diagnostic complet du système de freinage pour votre sécurité.",
     },
     {
       icon: "💻",
       title: "Diagnostic Électronique",
-      description: "Diagnostic complet avec valise dernière génération. Lecture et effacement de codes défauts. Analyse moteur, ABS, airbag et plus.",
+      description:
+        "Diagnostic complet avec valise dernière génération. Lecture et effacement de codes défauts. Analyse moteur, ABS, airbag et plus.",
     },
     {
       icon: "🚗",
       title: "Pneumatiques",
-      description: "Vente de pneus toutes marques. Montage, équilibrage, permutation. Contrôle de géométrie et parallélisme.",
+      description:
+        "Vente de pneus toutes marques. Montage, équilibrage, permutation. Contrôle de géométrie et parallélisme.",
     },
     {
       icon: "⚙️",
       title: "Distribution / Embrayage",
-      description: "Remplacement de kit de distribution courroie ou chaîne. Changement d'embrayage complet. Intervention selon préconisations constructeur.",
+      description:
+        "Remplacement de kit de distribution courroie ou chaîne. Changement d'embrayage complet. Intervention selon préconisations constructeur.",
     },
     {
       icon: "🔋",
       title: "Batterie & Électricité",
-      description: "Test et remplacement de batterie. Diagnostic système électrique. Réparation alternateur et démarreur.",
+      description:
+        "Test et remplacement de batterie. Diagnostic système électrique. Réparation alternateur et démarreur.",
     },
     {
-      icon: "❄️",
-      title: "Climatisation",
-      description: "Recharge de climatisation. Contrôle d'étanchéité. Désinfection et entretien du système de climatisation.",
+      icon: "⚡🚗",
+      title: "Reprogrammation moteur – Stage 1 & Stage 2",
+      description: `Le Stage 1 s’effectue sans modification mécanique et reste adapté à un usage quotidien.
+Le Stage 2 offre des performances supérieures et nécessite des évolutions mécaniques (admission, échappement, échangeur…).`,
     },
     {
       icon: "🔍",
       title: "Contrôle Technique",
-      description: "Pré-contrôle technique gratuit. Préparation et accompagnement. Réparation des contre-visites.",
+      description:
+        "Pré-contrôle technique gratuit. Préparation et accompagnement. Réparation des contre-visites.",
     },
     {
       icon: "⚡",
       title: "Échappement",
-      description: "Diagnostic système d'échappement. Remplacement de silencieux, catalyseur, FAP. Soudure et réparation.",
+      description:
+        "Diagnostic système d'échappement. Remplacement de silencieux, catalyseur, FAP. Soudure et réparation.",
     },
     {
       icon: "🛠️",
       title: "Suspension & Amortisseurs",
-      description: "Contrôle et remplacement d'amortisseurs. Réparation de suspension. Remplacement de silent-blocs et rotules.",
+      description:
+        "Contrôle et remplacement d'amortisseurs. Réparation de suspension. Remplacement de silent-blocs et rotules.",
     },
     {
-      icon: "🪟",
-      title: "Vitrage",
-      description: "Réparation d'impact pare-brise. Remplacement de vitrage. Calibrage caméra et capteurs ADAS.",
+      icon: "🧠⚡",
+      title: "Suppression FAP / AdBlue / EGR",
+      description:
+        "Intervention visant à supprimer les systèmes FAP, AdBlue et EGR afin d’éliminer les pannes récurrentes, voyants moteur et pertes de performance. Améliore la fiabilité, la souplesse moteur et réduit les coûts d’entretien liés à ces dispositifs.",
     },
     {
       icon: "🔧",
       title: "Mécanique Générale",
-      description: "Réparation moteur et boîte de vitesses. Entretien transmission. Diagnostic et réparation toutes pannes mécaniques.",
+      description:
+        "Réparation moteur et boîte de vitesses. Entretien transmission. Diagnostic et réparation toutes pannes mécaniques.",
     },
   ];
 
@@ -77,7 +90,8 @@ export default function ServicesPage() {
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-4">Nos Services</h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Un service complet et professionnel pour l'entretien et la réparation de tous types de véhicules
+            Un service complet et professionnel pour l'entretien et la réparation
+            de tous types de véhicules
           </p>
         </div>
       </div>
