@@ -129,6 +129,44 @@ L'accès à l'administration est protégé par :
 
 ⚠️ **Important** : Changez ces identifiants en production !
 
+## 🔐 Sécurité de l'authentification admin
+
+### Configuration
+
+L'accès à l'administration (`/admin/showroom`) est protégé par : 
+
+- **Email + Mot de passe** stockés dans les variables d'environnement
+- **Mot de passe fort** (32+ caractères aléatoires recommandés)
+- **Protection anti-bruteforce** : 5 tentatives max, blocage 15 minutes
+
+### Générer un mot de passe fort
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
+
+### Variables d'environnement requises
+
+```env
+ADMIN_EMAIL=votre-email@example.com
+ADMIN_PASSWORD=<votre_mot_de_passe_fort>
+```
+
+### Protection anti-bruteforce
+
+Le système enregistre les tentatives de connexion échouées :
+- Maximum **5 tentatives** par adresse email
+- Après 5 échecs : **blocage de 15 minutes**
+- Le compteur se réinitialise automatiquement après une connexion réussie
+- Les logs sont anonymisés et n'apparaissent qu'en mode développement
+
+### Bonnes pratiques
+
+1. **Utilisez un mot de passe fort** : Minimum 32 caractères générés aléatoirement
+2. **Ne commitez jamais** vos variables d'environnement dans le dépôt
+3. **Changez le mot de passe** si vous soupçonnez une compromission
+4. **Surveillez les logs** en développement pour détecter des tentatives suspectes
+
 ## 💾 Base de Données Firebase
 
 Le projet utilise Firebase pour la persistance des données :
