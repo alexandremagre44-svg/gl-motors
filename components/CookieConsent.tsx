@@ -65,13 +65,15 @@ export default function CookieConsent() {
   };
 
   const initializeAnalytics = () => {
-    // Placeholder for analytics initialization
+    // TODO: Implement analytics initialization
     // Example: Google Analytics, Matomo, etc.
+    // See GDPR_COMPLIANCE.md for integration instructions
     console.log('Analytics cookies initialized');
   };
 
   const removeAnalytics = () => {
-    // Placeholder for analytics removal
+    // TODO: Implement analytics removal
+    // Remove tracking scripts and clear analytics cookies
     console.log('Analytics cookies removed');
   };
 
@@ -81,14 +83,14 @@ export default function CookieConsent() {
 
   // Function to reopen banner from footer link
   useEffect(() => {
-    const handleCookieSettings = (event: CustomEvent) => {
+    const handleCookieSettings = () => {
       setShowBanner(true);
       setShowSettings(true);
     };
 
-    window.addEventListener('openCookieSettings' as any, handleCookieSettings);
+    window.addEventListener('openCookieSettings', handleCookieSettings);
     return () => {
-      window.removeEventListener('openCookieSettings' as any, handleCookieSettings);
+      window.removeEventListener('openCookieSettings', handleCookieSettings);
     };
   }, []);
 

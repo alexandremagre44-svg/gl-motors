@@ -54,6 +54,7 @@ export default function MentionsLegalesPage() {
                   {siteConfig.contact.email}
                 </a>
               </p>
+              {/* TODO: Replace placeholders with actual business registration numbers */}
               <p>
                 <strong>Numéro SIRET :</strong> [À compléter]
               </p>
