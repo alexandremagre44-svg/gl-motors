@@ -10,6 +10,7 @@ export default function ContactPage() {
     email: '',
     phone: '',
     message: '',
+    privacyConsent: false,
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -19,7 +20,7 @@ export default function ContactPage() {
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', message: '', privacyConsent: false });
     }, 3000);
   };
 
@@ -235,6 +236,33 @@ export default function ContactPage() {
                   rows={6}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
                 />
+              </div>
+
+              <div className="mb-6">
+                <label className="flex items-start">
+                  <input
+                    type="checkbox"
+                    name="privacyConsent"
+                    checked={formData.privacyConsent}
+                    onChange={(e) =>
+                      setFormData({ ...formData, privacyConsent: e.target.checked })
+                    }
+                    required
+                    className="mt-1 mr-3 h-4 w-4 text-red-600 border-gray-300 rounded focus:ring-red-600"
+                  />
+                  <span className="text-sm text-gray-700">
+                    J'accepte que mes données soient traitées conformément à la{' '}
+                    <a
+                      href="/politique-confidentialite"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-red-600 hover:text-red-700 underline"
+                    >
+                      politique de confidentialité
+                    </a>{' '}
+                    de GL Motors. *
+                  </span>
+                </label>
               </div>
 
               <button

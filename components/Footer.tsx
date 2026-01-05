@@ -1,7 +1,15 @@
+'use client';
+
 import Link from 'next/link';
 import { siteConfig } from '@/lib/site.config';
 
 export default function Footer() {
+  const openCookieSettings = () => {
+    // Dispatch custom event to reopen cookie banner
+    const event = new CustomEvent('openCookieSettings');
+    window.dispatchEvent(event);
+  };
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-12">
@@ -63,8 +71,28 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. Tous droits réservés.</p>
+        <div className="border-t border-gray-800 mt-8 pt-8">
+          {/* Legal Links */}
+          <div className="flex flex-wrap justify-center gap-4 mb-4 text-sm">
+            <Link href="/mentions-legales" className="text-gray-400 hover:text-red-600 transition-colors">
+              Mentions légales
+            </Link>
+            <span className="text-gray-600">|</span>
+            <Link href="/politique-confidentialite" className="text-gray-400 hover:text-red-600 transition-colors">
+              Politique de confidentialité
+            </Link>
+            <span className="text-gray-600">|</span>
+            <button
+              onClick={openCookieSettings}
+              className="text-gray-400 hover:text-red-600 transition-colors"
+            >
+              Gestion des cookies
+            </button>
+          </div>
+          
+          <div className="text-center text-gray-400">
+            <p>&copy; {new Date().getFullYear()} {siteConfig.name}. Tous droits réservés.</p>
+          </div>
         </div>
       </div>
     </footer>
