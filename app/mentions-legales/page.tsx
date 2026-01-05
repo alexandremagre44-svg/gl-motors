@@ -56,13 +56,13 @@ export default function MentionsLegalesPage() {
               </p>
               {/* TODO: Replace placeholders with actual business registration numbers */}
               <p>
-                <strong>Numéro SIRET :</strong> [À compléter]
+                <strong>Numéro SIRET :</strong> [98407305600058]
               </p>
               <p>
-                <strong>Numéro RCS :</strong> [À compléter]
+                <strong>Numéro RCS :</strong> [RCS Nantes 984 073 056]
               </p>
               <p>
-                <strong>Numéro de TVA intracommunautaire :</strong> [À compléter]
+                <strong>Numéro de TVA intracommunautaire :</strong> [FR27984073056]
               </p>
             </div>
           </section>
